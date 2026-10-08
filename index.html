@@ -8,11 +8,16 @@
 </head>
 <body>
   <main>
-    <h1>BoraJogar</h1>
     <section id="home-screen">
-        <p><button onclick="showMiniGames()">Jogar</button></p>
+        <h1>BoraJogar</h1>
+        <p><button id="play-button" onclick="showScreen(impostor)">Jogar</button></p>
     </section>
 
+    <section id="impostor">
+      <h1>Impostor</h1>
+      <button id="back-button" onclick="showScreen(homeScreen)">Voltar</button>
+    </section>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>
