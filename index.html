@@ -10,31 +10,34 @@
   <main>
     <section id="home-screen">
         <h1>BoraJogar</h1>
-        <p><button id="play-button" onclick="showScreen(impostor)">Jogar</button></p>
+        <p><button id="play-button">Jogar</button></p>
     </section>
 
     <section id="impostor">
       <h1>Impostor</h1>
       <menu>
-        <button id="players-number" onclick="openAmountOfPlayers()">Quantidade de jogadores</button><br>
-        <button id="back-button" onclick="showScreen(homeScreen)">Voltar</button>
+        <button id="players-number">Quantidade de jogadores</button><br>
+        <button id="back-button">Voltar</button>
       </menu>
     </section>
 
     <section id="amount-of-players">
       <h1>Escolha a quantidade de jogadores:</h1>
       <input type="number" name="" id="input-players-number"><br>
-      <button id="btn-confirm-players-number" onclick="register()">Confirmar</button>
+      <button id="btn-confirm-players-number">Confirmar</button>
     </section>
 
     <section id="players-name">
       <h1>Qual o nome de cada jogador?</h1>
-      <form id="players-name-form" onsubmit="savePlayers(event, impostor)">
+      <form id="players-name-form">
         <div id="players-name-inputs"></div>
         <button type="submit">Confirmar nomes</button>
       </form>
     </section>
   </main>
-  <script src="script.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/players.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

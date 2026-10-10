@@ -1,29 +1,6 @@
-const homeScreen = document.getElementById("home-screen");
-const impostor = document.getElementById("impostor");
-const playButton = document.getElementById("play-button")
-const amountOfPlayers = document.getElementById("amount-of-players")
-const playersName = document.getElementById("players-name")
-const playersNameInputs = document.getElementById("players-name-inputs")
-const backButton = document.getElementById("back-button")
+// Responsável por tudo relacionado aos jogadores.
 
-let jogadores = [];
-
-// Desabilita as outras telas e mostra apenas a selecionada
-function showScreen(screen) {
-    homeScreen.style.display = "none";
-    impostor.style.display = "none";
-    amountOfPlayers.style.display = "none";
-    playersName.style.display = "none";
-    screen.style.display = "block";
-}
-
-// Coloca um blur e impede cliques na tela anterior e mostra a tela de quantidade de jogadores
-function openAmountOfPlayers() {
-    impostor.style.filter = "blur(1.5rem)";
-    impostor.style.pointerEvents = "none";
-
-    amountOfPlayers.style.display = "block";
-}
+const playersNameInputs = document.getElementById("players-name-inputs");
 
 function register() {
     const playersQuantity = document.getElementById("input-players-number");
@@ -78,10 +55,10 @@ function savePlayers(event, returnScreen = impostor) {
         return;
     }
 
-    jogadores = names.map((name) => ({ // Converte cada nome em um objeto dentro do array de jogadores.
+    gameState.jogadores = names.map((name) => ({ // Converte cada nome em um objeto dentro do array de jogadores.
         nome: name // Armazena o nome já sem espaços desnecessários no início e no final.
     }));
 
-    window.alert(`Jogadores cadastrados: ${jogadores.map((jogador) => jogador.nome).join(", ")}`);
+    window.alert(`Jogadores cadastrados: ${gameState.jogadores.map((jogador) => jogador.nome).join(", ")}`);
     showScreen(returnScreen);
 }
