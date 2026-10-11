@@ -55,11 +55,11 @@ function savePlayers(event, returnScreen = impostor) {
         return
     }
 
-    gameState.jogadores = names.map((name) => ({ // Converte cada nome em um objeto dentro do array de jogadores.
-        nome: name // Armazena o nome já sem espaços desnecessários no início e no final.
+    gameState.players = names.map((name) => ({ // Converte cada nome em um objeto dentro do array de jogadores.
+        name // Armazena o nome já sem espaços desnecessários no início e no final.
     }));
 
-    window.alert(`Jogadores cadastrados: ${gameState.jogadores.map((jogador) => jogador.nome.toUpperCase()).join(", ")}`)
+    window.alert(`Jogadores cadastrados: ${gameState.players.map((player) => player.name.toUpperCase()).join(", ")}`)
     showImpostorStartButton()
     showScreen(returnScreen)
 }

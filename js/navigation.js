@@ -25,13 +25,13 @@ function openAmountOfPlayers() {
 }
 
 function distributionPanelUpdate() {
-    const jogador = gameState.jogadores[currentPlayerIndex]
+    const player = gameState.players[currentPlayerIndex]
 
-    if (!jogador) { // Se o índice não encontrar nenhum jogador, a função é encerrada sem causar erro.
+    if (!player) { // Se o índice não encontrar nenhum jogador, a função é encerrada sem causar erro.
         return;
     }
 
-    currentPlayerName.textContent = `Vez de ${jogador.nome}`
+    currentPlayerName.textContent = `Vez de ${player.name.toUpperCase()}`
 
     // Esconde o segredo sempre que a tela é atualizada
     secretArea.hidden = !revealedWord
@@ -43,7 +43,7 @@ function distributionPanelUpdate() {
     nextButton.hidden = !revealedWord
 
     // O último jogador terá um botão de finalizar
-    if (currentPlayerIndex === gameState.jogadores.length - 1) {
+    if (currentPlayerIndex === gameState.players.length - 1) {
         nextButton.textContent = "Finalizar"
     } else {
         nextButton.textContent = "Passar para o próximo"
@@ -52,8 +52,8 @@ function distributionPanelUpdate() {
     // A informação exibida corresponde ao jogador atual.
     if (revealedWord) { 
         secretInformation.textContent =
-            informacoesSecretas[currentPlayerIndex]
-        instruction.textContent = currentPlayerIndex === gameState.jogadores.length - 1
+            secretMessages[currentPlayerIndex]
+        instruction.textContent = currentPlayerIndex === gameState.players.length - 1
             ? "Memorize sua informação e finalize a distribuição." // Para o último jogador.
             : "Memorize sua informação e passe o celular." // Para jogadores que ainda precisam passar o celular
     } else { // Antes da revelação.

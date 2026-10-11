@@ -25,7 +25,7 @@ nextButton.addEventListener("click", function () {
     secretInformation.textContent = ""
 
     // Se for o último jogador, encerra a distribuição
-    if (currentPlayerIndex === gameState.jogadores.length - 1) {
+    if (currentPlayerIndex === gameState.players.length - 1) {
         currentPlayerIndex = 0
         revealedWord = false
         showScreen(homeScreen)
