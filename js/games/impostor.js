@@ -1,5 +1,3 @@
-const playersNumberButton = document.getElementById("players-number")
-const startImpostorButton = document.getElementById("start-impostor-button") // Inicia o jogo
 const currentPlayerName = document.getElementById("current-player-name") // Mostra "Vez de [nome-do-jogador-atual]".
 const instruction = document.getElementById("instruction")
 const secretArea = document.getElementById("secret-area") // Contém a informação secreta.
@@ -7,17 +5,16 @@ const secretInformation = document.getElementById("secret-information") // Mostr
 let currentPlayerIndex = 0
 let revealedWord = false
 let secretMessages = [] // Armazena uma informação para cada jogador.
-const words = ["PRAIA", "VESTIDO", "LIXO"]
 const usedWords = new Set()
 
 function drawWord() {
-    let availableWords = words.filter((word) => !usedWords.has(word))
+    let availableWords = words.palavras.filter((word) => !usedWords.has(word))
     // Cria uma nova lista contendo apenas palavras que ainda não foram usadas.
 
     // Quando todas as palavras já foram usadas, começa um novo ciclo.
     if (availableWords.length === 0) {
         usedWords.clear()
-        availableWords = [...words]
+        availableWords = [...words.palavras]
     }
 
     const selectedIndex = Math.floor(Math.random() * availableWords.length)
@@ -27,19 +24,19 @@ function drawWord() {
     return selectedWord
 }
 
-function showImpostorStartButton() {
-    playersNumberButton.style.display = "none"
-    startImpostorButton.style.display = "inline-block"
-}
-
 function playImpostor() {
-    const impostorIndex = Math.floor(Math.random() * gameState.players.length) // O índice do impostor é escolhido aleatoriamente.
+    const impostorIndexes = new Set()
     const currentWord = drawWord()
+
+    // Continua sorteando jogadores até atingir a quantidade configurada. Se o mesmo índice for sorteado novamente, o Set não aumenta de tamanho. O loop continua até encontrar outro jogador.
+    while (impostorIndexes.size < gameState.currentGame.impostorCount) {
+        impostorIndexes.add(Math.floor(Math.random() * gameState.players.length))
+    }
 
     secretMessages = gameState.players.map((_, index) => // O _ representa o jogador atual, mas não é preciso usar o objeto inteiro, apenas o índice.
 
-        // Se o índice do jogador for igual ao índice escolhido para o impostor ele recebe "Você é o IMPOSTOR!" se não, ele recebe "Sua palavra é [palavra]".
-        index === impostorIndex ? "Você é o IMPOSTOR!" : `Sua palavra é ${currentWord}`
+        // Se o índice do jogador estiver no Set de impostor ele recebe "Você é o IMPOSTOR!" se não, ele recebe "Sua palavra é [palavra]".
+        impostorIndexes.has(index) ? "Você é o IMPOSTOR!" : `Sua palavra é ${currentWord}`
     );
     currentPlayerIndex = 0
     revealedWord = false

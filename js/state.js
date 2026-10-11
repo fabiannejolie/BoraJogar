@@ -2,5 +2,8 @@
 
 const gameState = {
     players: [], // Armazena os jogadores cadastrados.
-    currentGame: null // Campo para representar possíveis dados da partida atual.
+    currentGame: { // Armazena as configurações da partida atual.
+        impostorCount: 1,
+        durationSeconds: 60
+    }
 };

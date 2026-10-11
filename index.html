@@ -16,9 +16,8 @@
     <section id="impostor">
       <h1>Impostor</h1>
       <menu>
-        <button id="players-number">Quantidade de jogadores</button><br>
-        <button id="start-impostor-button">Jogar</button><br>
-        <button id="back-button">Voltar</button>
+      <button id="players-number">Quantidade de jogadores</button><br>
+      <button id="back-button">Voltar</button>
       </menu>
     </section>
 
@@ -50,10 +49,29 @@
       <button id="next-button" hidden>
           Passar para o próximo
       </button>
-</section>
+    </section>
+
+    <section id="config-impostor-screen">
+      <h1>Impostor</h1>
+      <p>Impostores
+        <button id="decrease-impostor-quantity" class="decrease-button">-</button>
+        <div id="impostor-quantity">1</div>
+        <button id="increase-impostor-quantity" class="increase-button">+</button>
+      </p>
+      <p>Duração
+        <button id="decrease-time" class="decrease-button">-</button>
+        <div id="duration-time">01:00</div>
+        <button id="increase-time" class="increase-button">+</button>
+      </p>
+      Dicas <input type="checkbox" name="" id="tips">
+      <br>
+      <button id="start-configured-game">Jogar</button>
+    </section>
+
   </main>
   <script src="js/state.js"></script>
   <script src="js/navigation.js"></script>
+  <script src="js/games/themes/words.js"></script>
   <script src="js/games/impostor.js"></script>
   <script src="js/players.js"></script>
   <script src="js/app.js"></script>
