@@ -17,6 +17,7 @@
       <h1>Impostor</h1>
       <menu>
         <button id="players-number">Quantidade de jogadores</button><br>
+        <button id="start-impostor-button">Jogar</button><br>
         <button id="back-button">Voltar</button>
       </menu>
     </section>
@@ -34,9 +35,26 @@
         <button type="submit">Confirmar nomes</button>
       </form>
     </section>
+
+    <section id="distribution-panel">
+      <h1 id="current-player-name"></h1>
+      <p id="instruction">
+          Passe o celular para o jogador indicado.
+      </p>
+      <div id="secret-area" hidden>
+          <p id="secret-information"></p>
+      </div>
+      <button id="reveal-button">
+          Revelar minha palavra
+      </button>
+      <button id="next-button" hidden>
+          Passar para o próximo
+      </button>
+</section>
   </main>
   <script src="js/state.js"></script>
   <script src="js/navigation.js"></script>
+  <script src="js/games/impostor.js"></script>
   <script src="js/players.js"></script>
   <script src="js/app.js"></script>
 </body>

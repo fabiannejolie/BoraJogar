@@ -2,6 +2,10 @@
   display: none;
 }
 
+#start-impostor-button {
+  display: none;
+}
+
 #amount-of-players {
   display: none;
   position: fixed;
@@ -12,6 +16,10 @@
 }
 
 #players-name {
+  display: none;
+}
+
+#distribution-panel {
   display: none;
 }
 
