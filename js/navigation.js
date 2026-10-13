@@ -6,6 +6,7 @@ const amountOfPlayers = document.getElementById("amount-of-players")
 const playersName = document.getElementById("players-name")
 const distributionPanel = document.getElementById("distribution-panel")
 const configImpostorScreen = document.getElementById("config-impostor-screen")
+const votingScreen = document.getElementById("voting-screen")
 
 // Desabilita as outras telas e mostra apenas a selecionada.
 function showScreen(screen) {
@@ -15,6 +16,7 @@ function showScreen(screen) {
     playersName.style.display = "none"
     distributionPanel.style.display = "none"
     configImpostorScreen.style.display = "none"
+    votingScreen.style.display = "none"
     screen.style.display = "block"
 }
 

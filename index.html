@@ -68,6 +68,17 @@
       <button id="start-configured-game">Jogar</button>
     </section>
 
+    <section id="voting-screen">
+      <h1>Hora de votar!</h1>
+      <div class="base-timer" aria-live="polite"> <!--Ajuda tecnologias assistivas a perceberem que o conteúdo do timer está sendo atualizado.-->
+        <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle class="base-timer__path-background" cx="50" cy="50" r="45"></circle> <!--Círculo de fundo cinza (primeiro).-->
+          <circle id="base-timer-path-remaining" class="base-timer__path-remaining" cx="50" cy="50" r="45"></circle> <!--Círculo que representa o tempo restante.-->
+        </svg>
+        <span id="base-timer-label" class="base-timer__label">00:00</span>
+      </div>
+    </section>
+
   </main>
   <script src="js/state.js"></script>
   <script src="js/navigation.js"></script>

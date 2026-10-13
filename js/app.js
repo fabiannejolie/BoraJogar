@@ -14,6 +14,11 @@ const increaseTimeButton = document.getElementById("increase-time")
 const impostorQuantity = document.getElementById("impostor-quantity")
 const durationTime = document.getElementById("duration-time")
 const startConfiguredGameButton = document.getElementById("start-configured-game")
+const timerLabel = document.getElementById("base-timer-label")
+const timerPath = document.getElementById("base-timer-path-remaining")
+const timerCircumference = 2 * Math.PI * 45 // Valor usado para controlar o strokeDashoffset.
+let timerInterval // Guarda o intervalo criado pelo setInterval.
+let timeLeft = 0
 
 playButton.addEventListener("click", () => showScreen(impostor))
 playersNumberButton.addEventListener("click", openAmountOfPlayers)
@@ -35,7 +40,8 @@ nextButton.addEventListener("click", function () {
     if (currentPlayerIndex === gameState.players.length - 1) {
         currentPlayerIndex = 0
         revealedWord = false
-        showScreen(homeScreen)
+        showScreen(votingScreen)
+        startTimer()
         return
     }
 
@@ -52,6 +58,31 @@ function formatDuration(seconds) { // Transforma segundos no formato de relógio
     const remainingSeconds = (seconds % 60).toString().padStart(2, "0")
 
     return `${minutes}:${remainingSeconds}`
+}
+
+function updateTimer() {
+    timerLabel.textContent = formatDuration(timeLeft) // Mostra o tempo restante na tela.
+    const progress = gameState.currentGame.durationSeconds > 0
+        ? timeLeft / gameState.currentGame.durationSeconds
+        : 0
+    timerPath.style.strokeDashoffset = timerCircumference * (1 - progress) // Cálculo do círculo visível.
+}
+
+function startTimer() {
+    clearInterval(timerInterval) // Evita que dois timers rodem ao mesmo tempo quando uma partida nova é iniciada.
+    timeLeft = gameState.currentGame.durationSeconds
+    timerPath.classList.remove("is-finished") 
+    updateTimer()
+
+    timerInterval = setInterval(() => {
+        timeLeft = Math.max(0, timeLeft - 1) // Impede que o timer fique negativo.
+        updateTimer()
+
+        if (timeLeft === 0) {
+            clearInterval(timerInterval)
+            timerPath.classList.add("is-finished")
+        }
+    }, 1000)
 }
 
 function updateImpostorConfiguration() { // Sincroniza o estado da aplicação com a tela.

@@ -1,4 +1,5 @@
-#impostor {
+#impostor,
+#voting-screen {
   display: none;
 }
 
@@ -28,4 +29,52 @@
 
 #config-impostor-screen {
   display: none;
+}
+
+/* Define a altura e a largura dos contêineres */
+.base-timer {
+  position: relative;
+  height: 220px;
+  width: 220px;
+  margin: 0 auto;
+}
+
+.base-timer__svg {
+  transform: rotate(-90deg); /* Rotaciona o SVG para que o início do círculo esteja no topo */
+  width: 100%;
+  height: 100%;
+}
+
+/* Remoção do preenchimento e definição da largura do traço */
+.base-timer__path-background,
+.base-timer__path-remaining {
+  fill: none;
+  stroke-width: 7;
+}
+
+.base-timer__path-background {
+  stroke: #e5e7eb;
+}
+
+.base-timer__path-remaining {
+  stroke: #2563eb; /* Define a cor azul do progresso */
+  stroke-linecap: round; /* Deixa as pontas do traço arredondadas */
+  stroke-dasharray: 282.743; /* Define o comprimento da linha */
+  stroke-dashoffset: 282.743; /* Inicialmente, o traço está completamente oculto */
+  transition: stroke-dashoffset 1s linear, stroke 0.2s ease; /* Adiciona uma transição suave para o deslocamento do traço e a cor do traço */
+}
+
+.base-timer__path-remaining.is-finished {
+  stroke: #dc2626;
+}
+
+.base-timer__label {
+  position: absolute;
+  inset: 0; /* Faz o texto ocupar toda a área do timer */
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-variant-numeric: tabular-nums; /* Garante que os números tenham largura fixa */
 }
