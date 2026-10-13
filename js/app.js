@@ -19,6 +19,11 @@ const timerPath = document.getElementById("base-timer-path-remaining")
 const timerCircumference = 2 * Math.PI * 45 // Valor usado para controlar o strokeDashoffset.
 let timerInterval // Guarda o intervalo criado pelo setInterval.
 let timeLeft = 0
+const playersToVoteFor = document.getElementById("players-to-vote-for")
+const votingButton = document.getElementById("voting-button")
+const votingResult = document.getElementById("voting-result")
+let selectedPlayerIndex = null
+let votingFinished = false
 
 playButton.addEventListener("click", () => showScreen(impostor))
 playersNumberButton.addEventListener("click", openAmountOfPlayers)
@@ -41,6 +46,7 @@ nextButton.addEventListener("click", function () {
         currentPlayerIndex = 0
         revealedWord = false
         showScreen(votingScreen)
+        renderVotingPlayers()
         startTimer()
         return
     }
@@ -137,3 +143,58 @@ increaseTimeButton.addEventListener("click", function () {
 })
 
 startConfiguredGameButton.addEventListener("click", playImpostor)
+
+function renderVotingPlayers() {
+    playersToVoteFor.innerHTML = ""
+    selectedPlayerIndex = null
+    votingFinished = false
+    votingButton.disabled = true
+    votingResult.textContent = ""
+
+    gameState.players.forEach((player, index) => {
+        const playerButton = document.createElement("button")
+        playerButton.type = "button"
+        playerButton.textContent = player.name.toUpperCase()
+        playerButton.setAttribute("aria-pressed", "false")
+
+        playerButton.addEventListener("click", () => {
+            if (votingFinished) {
+                return
+            }
+
+            selectedPlayerIndex = index
+
+            // Garante que apenas um jogador fique selecionado.
+            playersToVoteFor.querySelectorAll("button").forEach((button) => {
+                button.classList.remove("selected")
+                button.setAttribute("aria-pressed", "false")
+            })
+
+            playerButton.classList.add("selected")
+            playerButton.setAttribute("aria-pressed", "true")
+            votingButton.disabled = false
+        })
+
+        playersToVoteFor.appendChild(playerButton)
+    })
+}
+
+votingButton.addEventListener("click", () => {
+    if (selectedPlayerIndex === null || votingFinished) {
+        return
+    }
+
+    const votedPlayer = gameState.players[selectedPlayerIndex]
+    const votedForImpostor = gameState.currentGame.impostorIndexes.includes(selectedPlayerIndex) // Verifica se o índice votado está dentro da lista de impostores.
+
+    votingResult.textContent = votedForImpostor
+        ? `Acertou! ${votedPlayer.name.toUpperCase()} era um impostor.`
+        : `Você votou em ${votedPlayer.name.toUpperCase()}. Ele(a) não era um impostor.`
+
+    clearInterval(timerInterval) // Depois do voto o timer é parado.
+    votingFinished = true
+    votingButton.disabled = true
+    playersToVoteFor.querySelectorAll("button").forEach((button) => {
+        button.disabled = true
+    })
+})

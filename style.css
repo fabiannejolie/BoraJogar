@@ -31,6 +31,47 @@
   display: none;
 }
 
+#players-to-vote-for {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(120px, 1fr));
+  gap: 1rem;
+  max-width: 420px;
+  margin: 2rem auto 1rem;
+}
+
+#players-to-vote-for button {
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid;
+  border-radius: 0.5rem;
+  background-color: white;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+#players-to-vote-for button.selected {
+  background-color: #2563eb;
+  color: white;
+}
+
+#players-to-vote-for button:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: calc(50% - 0.5rem);
+}
+
+#voting-button {
+  display: block;
+  margin: 0 auto;
+}
+
+#voting-result {
+  min-height: 1.5rem;
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: bold;
+}
+
 /* Define a altura e a largura dos contêineres */
 .base-timer {
   position: relative;

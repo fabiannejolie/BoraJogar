@@ -32,6 +32,7 @@ function playImpostor() {
     while (impostorIndexes.size < gameState.currentGame.impostorCount) {
         impostorIndexes.add(Math.floor(Math.random() * gameState.players.length))
     }
+    gameState.currentGame.impostorIndexes = [...impostorIndexes]
 
     secretMessages = gameState.players.map((_, index) => // O _ representa o jogador atual, mas não é preciso usar o objeto inteiro, apenas o índice.
 

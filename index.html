@@ -35,22 +35,6 @@
       </form>
     </section>
 
-    <section id="distribution-panel">
-      <h1 id="current-player-name"></h1>
-      <p id="instruction">
-          Passe o celular para o jogador indicado.
-      </p>
-      <div id="secret-area" hidden>
-          <p id="secret-information"></p>
-      </div>
-      <button id="reveal-button">
-          Revelar minha palavra
-      </button>
-      <button id="next-button" hidden>
-          Passar para o próximo
-      </button>
-    </section>
-
     <section id="config-impostor-screen">
       <h1>Impostor</h1>
       <p>Impostores
@@ -67,6 +51,23 @@
       <br>
       <button id="start-configured-game">Jogar</button>
     </section>
+    
+    <section id="distribution-panel">
+      <h1 id="current-player-name"></h1>
+      <p id="instruction">
+          Passe o celular para o jogador indicado.
+      </p>
+      <div id="secret-area" hidden>
+          <p id="secret-information"></p>
+      </div>
+      <button id="reveal-button">
+          Revelar minha palavra
+      </button>
+      <button id="next-button" hidden>
+          Passar para o próximo
+      </button>
+    </section>
+    
 
     <section id="voting-screen">
       <h1>Hora de votar!</h1>
@@ -77,6 +78,10 @@
         </svg>
         <span id="base-timer-label" class="base-timer__label">00:00</span>
       </div>
+      <div id="players-to-vote-for">
+      </div>
+      <button id="voting-button" disabled>Votar</button>
+      <p id="voting-result" role="status"></p> 
     </section>
 
   </main>
