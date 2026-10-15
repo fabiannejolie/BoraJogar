@@ -23,9 +23,7 @@ const startConfiguredGameButton = document.getElementById(
   'start-configured-game'
 )
 const timerLabel = document.getElementById('base-timer-label')
-const timerPath = document.getElementById('base-timer-path-remaining')
 const timerProgressBar = document.getElementById('timer-progress-bar')
-const timerCircumference = 2 * Math.PI * 45 // Valor usado para controlar o strokeDashoffset.
 let timerInterval // Guarda o intervalo criado pelo setInterval.
 let timeLeft = 0
 const playersToVoteFor = document.getElementById('players-to-vote-for')
@@ -73,9 +71,6 @@ nextButton.addEventListener('click', function () {
 })
 
 function formatDuration(seconds) {
-  // Transforma segundos no formato de relógio.
-
-  // Garante que o número tenha dois dígitos e comece com 0.
   const minutes = Math.floor(seconds / 60)
     .toString()
     .padStart(2, '0')
@@ -85,12 +80,11 @@ function formatDuration(seconds) {
 }
 
 function updateTimer() {
-  timerLabel.textContent = formatDuration(timeLeft) // Mostra o tempo restante na tela.
+  timerLabel.textContent = formatDuration(timeLeft)
   const progress =
     gameState.currentGame.durationSeconds > 0
       ? timeLeft / gameState.currentGame.durationSeconds
       : 0
-  timerPath.style.strokeDashoffset = timerCircumference * (1 - progress) // Cálculo do círculo visível.
   timerProgressBar.style.width = `${progress * 100}%`
   timerProgressBar.classList.toggle('is-finished', timeLeft === 0)
 }
@@ -98,7 +92,6 @@ function updateTimer() {
 function startTimer() {
   clearInterval(timerInterval) // Evita que dois timers rodem ao mesmo tempo quando uma partida nova é iniciada.
   timeLeft = gameState.currentGame.durationSeconds
-  timerPath.classList.remove('is-finished')
   updateTimer()
 
   timerInterval = setInterval(() => {
@@ -107,7 +100,6 @@ function startTimer() {
 
     if (timeLeft === 0) {
       clearInterval(timerInterval)
-      timerPath.classList.add('is-finished')
     }
   }, 1000)
 }
@@ -180,9 +172,14 @@ function renderVotingPlayers() {
     playerButton.type = 'button'
     playerButton.textContent = player.name.toUpperCase()
     playerButton.setAttribute('aria-pressed', 'false')
+    playerButton.disabled =
+      gameState.currentGame.eliminatedPlayerIndexes.includes(index)
 
     playerButton.addEventListener('click', () => {
-      if (votingFinished) {
+      if (
+        votingFinished ||
+        gameState.currentGame.eliminatedPlayerIndexes.includes(index)
+      ) {
         return
       }
 
@@ -211,6 +208,32 @@ votingButton.addEventListener('click', () => {
   const votedPlayer = gameState.players[selectedPlayerIndex]
   const votedForImpostor =
     gameState.currentGame.impostorIndexes.includes(selectedPlayerIndex) // Verifica se o índice votado está dentro da lista de impostores.
+  const remainingImpostors = gameState.currentGame.impostorIndexes.filter(
+    index =>
+      !gameState.currentGame.eliminatedPlayerIndexes.includes(index) &&
+      index !== selectedPlayerIndex
+  )
+
+  clearInterval(timerInterval) // Depois do voto o timer é parado.
+  votingFinished = true
+  votingButton.disabled = true
+
+  if (votedForImpostor && remainingImpostors.length > 0) {
+    gameState.currentGame.eliminatedPlayerIndexes.push(selectedPlayerIndex)
+    const votedPlayerButton = playersToVoteFor.querySelectorAll('button')[
+      selectedPlayerIndex
+    ]
+    votedPlayerButton.disabled = true
+    votedPlayerButton.classList.remove('selected')
+    votedPlayerButton.setAttribute('aria-pressed', 'false')
+    selectedPlayerIndex = null
+    votingFinished = false
+    votingButton.disabled = true
+    votingResult.textContent = `Acertou! ${votedPlayer.name.toUpperCase()} era um impostor.
+    Ainda há mais impostores para serem encontrados.`
+    startTimer()
+    return
+  }
 
   const winners = votedForImpostor
     ? // Filtra todos os jogadores cujo índice não está em ImpostorIndexes, vencedores = jogadores. comuns.
@@ -218,7 +241,7 @@ votingButton.addEventListener('click', () => {
         .filter(
           (_, index) => !gameState.currentGame.impostorIndexes.includes(index)
         )
-        .map(player => player.name) // Transforma a lista de objetos de jogadores em uma lista contendo apenas seus nomes.
+        .map(player => player.name) // Transforma a lista de objetos em uma lista contendo apenas seus nomes.
     : // Filtra os jogadores cujo índice está em ImpostorIndexes, vencedores = impostores.
       gameState.players
         .filter((_, index) =>
@@ -232,15 +255,26 @@ votingButton.addEventListener('click', () => {
     winners: [...winners] // Cria uma cópia do array e evita que futuras alterações no array original winners modifiquem o resultado já salvo no histórico.
   })
 
-  votingResult.textContent = votedForImpostor
-    ? `Acertou! ${votedPlayer.name.toUpperCase()} era um impostor.
-    A palavra era ${gameState.currentGame.word}.`
-    : `Você votou em ${votedPlayer.name.toUpperCase()}. Ele(a) não era um impostor.
-    A palavra era ${gameState.currentGame.word}.`
+  const impostorNames = gameState.currentGame.impostorIndexes
+    .map(index => gameState.players[index].name.toUpperCase())
+    .join(', ')
 
-  clearInterval(timerInterval) // Depois do voto o timer é parado.
-  votingFinished = true
-  votingButton.disabled = true
+  if (votedForImpostor) {
+    votingResult.textContent =
+      gameState.currentGame.impostorIndexes.length === 1
+        ? `Acertou! ${votedPlayer.name.toUpperCase()} era um impostor.
+        A palavra era ${gameState.currentGame.word}.`
+        : `Acertou! Os impostores eram: ${impostorNames}.
+        A palavra era ${gameState.currentGame.word}.`
+  } else {
+    votingResult.textContent =
+      gameState.currentGame.impostorIndexes.length === 1
+        ? `Você votou em ${votedPlayer.name.toUpperCase()}. Ele(a) não era um impostor.
+        O impostor era ${impostorNames}. A palavra era ${gameState.currentGame.word}.`
+        : `Você votou em ${votedPlayer.name.toUpperCase()}. Ele(a) não era um impostor.
+        Os impostores eram: ${impostorNames}. A palavra era ${gameState.currentGame.word}.`
+  }
+
   playersToVoteFor.querySelectorAll('button').forEach(button => {
     button.disabled = true
   })
