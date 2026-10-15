@@ -24,6 +24,7 @@ const startConfiguredGameButton = document.getElementById(
 )
 const timerLabel = document.getElementById('base-timer-label')
 const timerPath = document.getElementById('base-timer-path-remaining')
+const timerProgressBar = document.getElementById('timer-progress-bar')
 const timerCircumference = 2 * Math.PI * 45 // Valor usado para controlar o strokeDashoffset.
 let timerInterval // Guarda o intervalo criado pelo setInterval.
 let timeLeft = 0
@@ -90,6 +91,8 @@ function updateTimer() {
       ? timeLeft / gameState.currentGame.durationSeconds
       : 0
   timerPath.style.strokeDashoffset = timerCircumference * (1 - progress) // Cálculo do círculo visível.
+  timerProgressBar.style.width = `${progress * 100}%`
+  timerProgressBar.classList.toggle('is-finished', timeLeft === 0)
 }
 
 function startTimer() {

@@ -49,7 +49,10 @@
         <div id="duration-time">01:00</div>
         <button id="increase-time" class="increase-button">+</button>
       </div>
-      Dicas <input type="checkbox" name="" id="tips">
+      <label class="tips-control" for="tips">
+        <span>Dicas</span>
+        <input type="checkbox" name="" id="tips">
+      </label>
       <br>
       <button id="start-configured-game">Jogar</button>
     </section>
@@ -81,6 +84,9 @@
           <circle id="base-timer-path-remaining" class="base-timer__path-remaining" cx="50" cy="50" r="45"></circle> <!--Círculo que representa o tempo restante.-->
         </svg>
         <span id="base-timer-label" class="base-timer__label">00:00</span>
+        <div class="timer-progress" aria-hidden="true">
+          <div id="timer-progress-bar"></div>
+        </div>
       </div>
       <div id="players-to-vote-for">
       </div>
