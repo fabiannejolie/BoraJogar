@@ -1,10 +1,16 @@
 // Responsável por tudo relacionado aos jogadores.
 
 const playersNameInputs = document.getElementById("players-name-inputs")
+const playersQuantityInput = document.getElementById("input-players-number")
+
+playersQuantityInput.addEventListener("input", () => {
+    if (playersQuantityInput.value.startsWith("-")) {
+        playersQuantityInput.value = ""
+    }
+})
 
 function register() {
-    const playersQuantity = document.getElementById("input-players-number")
-    const playersNumber = Number(playersQuantity.value)
+    const playersNumber = Number(playersQuantityInput.value)
 
     // Se o número não for inteiro OU for menor/igual a 2 OU for maior que 10 
     if (!Number.isInteger(playersNumber) || playersNumber <= 2 || playersNumber > 10) {
@@ -39,7 +45,7 @@ function register() {
 }
 
 // Coleta os nomes digitados.
-function savePlayers(event, returnScreen = impostor) {
+function savePlayers(event) {
 
     // Impede o recarregamento padrão que pode ocorrer em formulários.
     event.preventDefault();

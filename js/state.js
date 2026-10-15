@@ -8,6 +8,7 @@ const gameState = {
     impostorCount: 1,
     durationSeconds: 60,
     impostorIndexes: [],
+    eliminatedPlayerIndexes: [],
     word: '',
     winners: []
   }

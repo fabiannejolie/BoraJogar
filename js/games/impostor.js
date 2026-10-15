@@ -29,6 +29,7 @@ function playImpostor() {
   const currentWord = drawWord()
   gameState.currentGame.word = currentWord
   gameState.currentGame.winners = []
+  gameState.currentGame.eliminatedPlayerIndexes = []
 
   // Continua sorteando jogadores até atingir a quantidade configurada. Se o mesmo índice for sorteado novamente, o Set não aumenta de tamanho. O loop continua até encontrar outro jogador.
   while (impostorIndexes.size < gameState.currentGame.impostorCount) {
