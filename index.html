@@ -37,16 +37,18 @@
 
     <section id="config-impostor-screen">
       <h1>Impostor</h1>
-      <p>Impostores
+      <div class="setting-control">
+        <span>Impostores</span>
         <button id="decrease-impostor-quantity" class="decrease-button">-</button>
         <div id="impostor-quantity">1</div>
         <button id="increase-impostor-quantity" class="increase-button">+</button>
-      </p>
-      <p>Duração
+      </div>
+      <div class="setting-control">
+        <span>Duração</span>
         <button id="decrease-time" class="decrease-button">-</button>
         <div id="duration-time">01:00</div>
         <button id="increase-time" class="increase-button">+</button>
-      </p>
+      </div>
       Dicas <input type="checkbox" name="" id="tips">
       <br>
       <button id="start-configured-game">Jogar</button>
@@ -60,12 +62,14 @@
       <div id="secret-area" hidden>
           <p id="secret-information"></p>
       </div>
-      <button id="reveal-button">
-          Revelar minha palavra
-      </button>
-      <button id="next-button" hidden>
-          Passar para o próximo
-      </button>
+      <div id="distribution-actions">
+        <button id="reveal-button">
+            Revelar minha palavra
+        </button>
+        <button id="next-button" hidden>
+            Passar para o próximo
+        </button>
+      </div>
     </section>
     
 

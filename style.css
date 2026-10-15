@@ -1,3 +1,53 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+main {
+  width: min(100%, 42rem);
+  margin: 0 auto;
+}
+
+section {
+  width: 100%;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+button {
+  display: block;
+  margin: 0.75rem auto;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+#distribution-actions {
+  min-height: 2.25rem;
+}
+
+#distribution-actions button {
+  margin: 0.75rem auto;
+}
+
 #impostor,
 #voting-screen {
   display: none;
@@ -6,10 +56,14 @@
 #amount-of-players {
   display: none;
   position: fixed;
+  top: 50%;
+  left: 50%;
   z-index: 2;
+  width: min(calc(100% - 2rem), 32rem);
   background-color: white;
   padding: 2rem;
   border-radius: 1rem;
+  transform: translate(-50%, -50%);
 }
 
 #players-name {
@@ -24,7 +78,40 @@
   display: grid;
   gap: 0.5rem;
   margin-bottom: 1rem;
-  max-width: fit-content;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 24rem;
+  text-align: left;
+}
+
+#players-name-inputs input,
+#input-players-number {
+  width: 100%;
+  min-height: 2.25rem;
+  padding: 0.5rem;
+}
+
+#players-name-inputs br {
+  display: none;
+}
+
+#impostor menu {
+  margin: 0;
+  padding: 0;
+}
+
+.setting-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.setting-control > .decrease-button,
+.setting-control > .increase-button {
+  display: inline-block;
+  margin: 0;
 }
 
 #config-impostor-screen {
@@ -34,12 +121,13 @@
 #players-to-vote-for {
   display: grid;
   grid-template-columns: repeat(2, minmax(120px, 1fr));
-  gap: 1rem;
-  max-width: 420px;
+  gap: 0.5rem;
+  max-width: 320px;
   margin: 2rem auto 1rem;
 }
 
 #players-to-vote-for button {
+  margin: 0;
   min-height: 3rem;
   padding: 0.75rem 1rem;
   border: 2px solid;
@@ -57,7 +145,7 @@
 #players-to-vote-for button:last-child:nth-child(odd) {
   grid-column: 1 / -1;
   justify-self: center;
-  width: calc(50% - 0.5rem);
+  width: calc(50% - 0.25rem);
 }
 
 #voting-button {
