@@ -56,6 +56,11 @@ function savePlayers(event) {
     const namesForComparison = names.map((name) => name.toLowerCase()); // Converte o nome para letras minúsculas.
     const uniqueNames = new Set(namesForComparison); // Um Set armazena apenas valores únicos. Se um valor aparecer mais de uma vez, ele será guardado apenas uma vez.
 
+    if (names.some((name) => name.length === 0)) {
+        window.alert("Os nomes não podem ficar vazios.")
+        return
+    }
+
     if (uniqueNames.size !== names.length) { // Compara a quantidade total de nomes digitados e a quantidade de nomes diferentes.
         window.alert("Não é permitido repetir nomes.")
         return
