@@ -12,6 +12,40 @@ function formatDuration(seconds) {
   return `${minutes}:${remainingSeconds}`
 }
 
+function playAlarmSound() {
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext
+  if (!AudioContextClass) {
+    return
+  }
+
+  try {
+    const audioCtx = new AudioContextClass()
+    const beepTimes = [0, 0.2, 0.4]
+
+    beepTimes.forEach(startTime => {
+      const oscillator = audioCtx.createOscillator()
+      const gainNode = audioCtx.createGain()
+
+      oscillator.type = 'square'
+      oscillator.frequency.setValueAtTime(880, audioCtx.currentTime + startTime)
+
+      gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime + startTime)
+      gainNode.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioCtx.currentTime + startTime + 0.15
+      )
+
+      oscillator.connect(gainNode)
+      gainNode.connect(audioCtx.destination)
+
+      oscillator.start(audioCtx.currentTime + startTime)
+      oscillator.stop(audioCtx.currentTime + startTime + 0.15)
+    })
+  } catch (error) {
+    // Ignora caso o navegador bloqueie reprodução de áudio sem interação prévia.
+  }
+}
+
 function updateTimer() {
   timerLabel.textContent = formatDuration(timeLeft)
   const progress =
@@ -20,6 +54,10 @@ function updateTimer() {
       : 0
   timerProgressBar.style.width = `${progress * 100}%`
   timerProgressBar.classList.toggle('is-finished', timeLeft === 0)
+  const voteBtn = document.getElementById('voting-button')
+  if (voteBtn) {
+    voteBtn.classList.toggle('time-up', timeLeft === 0)
+  }
 }
 
 function startTimer() {
@@ -33,6 +71,7 @@ function startTimer() {
 
     if (timeLeft === 0) {
       clearInterval(timerInterval)
+      playAlarmSound()
     }
   }, 1000)
 }

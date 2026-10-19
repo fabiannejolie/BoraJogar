@@ -13,7 +13,9 @@ function renderVotingPlayers() {
   selectedPlayerIndex = null
   votingFinished = false
   votingButton.disabled = true
+  votingButton.classList.remove('time-up')
   votingResult.textContent = ''
+  votingResult.hidden = true   
   playAgainImpostor.style.display = 'none'
   backToTheStartImpostor.style.display = 'none'
 
@@ -103,6 +105,9 @@ function finishMatch(result) {
         Os impostores eram: ${impostorNames}. A palavra era ${gameState.currentGame.word}.`
   }
 
+  votingResult.hidden = false
+  votingButton.classList.remove('time-up')
+
   playersToVoteFor.querySelectorAll('button').forEach(button => {
     button.disabled = true
   })
@@ -125,6 +130,7 @@ votingButton.addEventListener('click', () => {
   clearInterval(timerInterval) // Depois do voto o timer é parado.
   votingFinished = true
   votingButton.disabled = true
+  votingButton.classList.remove('time-up')
 
   if (result.votedForImpostor && remainingImpostors.length > 0) {
     gameState.currentGame.eliminatedPlayerIndexes.push(selectedPlayerIndex)
@@ -139,6 +145,7 @@ votingButton.addEventListener('click', () => {
     votingButton.disabled = true
     votingResult.textContent = `Acertou! ${result.votedPlayer.name.toUpperCase()} era um impostor.
     Ainda há mais impostores para serem encontrados.`
+    votingResult.hidden = false
     startTimer()
     return
   }
